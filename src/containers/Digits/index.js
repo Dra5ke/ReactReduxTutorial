@@ -1,16 +1,15 @@
 import { connect } from 'react-redux';
 import DigitsView from '../../components/Digits';
 import { digitClick } from '../../actions/digit';
-import store from '../../store';
 import { updateHistory } from '../../actions/history';
 
-export const digitClickHandler = dispatch => (numberClicked) => {
+export const digitClickHandler = numberClicked => (dispatch, getState) => {
     dispatch(digitClick(numberClicked));
-    dispatch(updateHistory(store.getState().curExpression));
+    dispatch(updateHistory(getState().curExpression));
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    digitClickHandler: digitClickHandler(dispatch)
-});
+    digitClickHandler: numberClicked => dispatch(digitClickHandler(numberClicked))
+})
 
 export default connect(null, mapDispatchToProps)(DigitsView);
